@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="userIdGenerator" class="ua.skillsup.jp1.dao.generators.UserIdGenerator"/>
+	<bean id="productIdGenerator" class="ua.skillsup.jp1.dao.generators.ProductIdGenerator"/>
+	<bean id="orderIdGenerator" class="ua.skillsup.jp1.dao.generators.OrderIdGenerator"/>
+
+	<bean id="userDao" class="ua.skillsup.jp1.dao.repo.impl.UserDaoImpl">
+		<constructor-arg name="userIdGenerator" ref="userIdGenerator"/>
+	</bean>
+
+	<bean id="productDao" class="ua.skillsup.jp1.dao.repo.impl.ProductDaoImpl">
+		<constructor-arg name="productIdGenerator" ref="productIdGenerator"/>
+	</bean>
+
+	<bean id="orderDao" class="ua.skillsup.jp1.dao.repo.impl.OrderDaoImpl">
+		<constructor-arg name="orderIdGenerator" ref="orderIdGenerator"/>
+	</bean>
+</beans>
