@@ -1,26 +1,34 @@
 package ua.skillsup.jp1.services.impl;
 
-import ua.skillsup.jp1.dao.generators.IdGenerator;
+import java.util.List;
+
 import ua.skillsup.jp1.dao.model.Product;
 import ua.skillsup.jp1.dao.repo.ProductDao;
 import ua.skillsup.jp1.services.ProductService;
+import ua.skillsup.jp1.services.converters.ProductConverter;
+import ua.skillsup.jp1.services.dto.ProductDto;
 import ua.skillsup.jp1.services.exceptions.OutOfStockException;
 
 public class ProductServiceImpl implements ProductService {
 
-	private final IdGenerator<Product> productIdGenerator;
-
 	private final ProductDao productDao;
 
-	public ProductServiceImpl(IdGenerator<Product> productIdGenerator, ProductDao productDao) {
-		this.productIdGenerator = productIdGenerator;
+	private final ProductConverter productConverter;
+
+	public ProductServiceImpl(ProductDao productDao, ProductConverter productConverter) {
 		this.productDao = productDao;
+		this.productConverter = productConverter;
 	}
 
 	@Override
-	public void create(Product product) {
-		product.setId(productIdGenerator.incrementAndGet());
+	public void create(ProductDto productDto) {
+		Product product = productConverter.toEntity(productDto);
 		productDao.create(product);
+	}
+
+	@Override
+	public List<Product> findAll() {
+		return productDao.findAll();
 	}
 
 	@Override

@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ua.skillsup.jp1.dao.generators.IdGenerator;
-import ua.skillsup.jp1.dao.generators.OrderIdGenerator;
 import ua.skillsup.jp1.dao.model.Order;
 import ua.skillsup.jp1.dao.model.Product;
 import ua.skillsup.jp1.dao.model.User;
@@ -23,16 +21,13 @@ public class OrderServiceImpl implements OrderService {
 	private final UserDao userDao;
 	private final ProductDao productDao;
 
-	private final IdGenerator<Order> orderIdGenerator;
-
 	private final ProductService productService;
 
 	public OrderServiceImpl(OrderDao orderDao, UserDao userDao, ProductDao productDao,
-			OrderIdGenerator orderIdGenerator, ProductService productService) {
+			ProductService productService) {
 		this.orderDao = orderDao;
 		this.userDao = userDao;
 		this.productDao = productDao;
-		this.orderIdGenerator = orderIdGenerator;
 		this.productService = productService;
 	}
 
@@ -43,11 +38,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private Order initOrder(Long userId, List<OrderItem> items) {
-		Long newOrderId = orderIdGenerator.incrementAndGet();
 		User user = userDao.findById(userId);
 		Map<Product, Integer> productsWithCounts = getProductsWithCounts(items);
 
-		return new Order(newOrderId, user, productsWithCounts);
+		return new Order(null, user, productsWithCounts);
 	}
 
 	private Map<Product, Integer> getProductsWithCounts(List<OrderItem> items) {
@@ -93,5 +87,10 @@ public class OrderServiceImpl implements OrderService {
 			Integer count = item.getCount();
 			productService.reduceCount(productId, count);
 		}
+	}
+
+	@Override
+	public List<Order> findAll() {
+		return orderDao.findAll();
 	}
 }
