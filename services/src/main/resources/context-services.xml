@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="context-dao.xml"/>
+
+	<bean id="userValidationService" class="ua.skillsup.jp1.services.validation.UserValidationService"/>
+	<bean id="userConverter" class="ua.skillsup.jp1.services.converters.UserConverter"/>
+	<bean id="productConverter" class="ua.skillsup.jp1.services.converters.ProductConverter"/>
+
+	<bean id="userService" class="ua.skillsup.jp1.services.impl.UserServiceImpl">
+		<constructor-arg name="userConverter" ref="userConverter"/>
+		<constructor-arg name="userValidationService" ref="userValidationService"/>
+		<constructor-arg name="userDao" ref="userDao"/>
+	</bean>
+
+	<bean id="productService" class="ua.skillsup.jp1.services.impl.ProductServiceImpl">
+		<constructor-arg name="productConverter" ref="productConverter"/>
+		<constructor-arg name="productDao" ref="productDao"/>
+	</bean>
+
+	<bean id="orderService" class="ua.skillsup.jp1.services.impl.OrderServiceImpl">
+		<constructor-arg name="orderDao" ref="orderDao"/>
+		<constructor-arg name="userDao" ref="userDao"/>
+		<constructor-arg name="productDao" ref="productDao"/>
+		<constructor-arg name="productService" ref="productService"/>
+	</bean>
+</beans>

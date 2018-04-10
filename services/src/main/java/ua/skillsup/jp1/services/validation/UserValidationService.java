@@ -3,7 +3,7 @@ package ua.skillsup.jp1.services.validation;
 import ua.skillsup.jp1.dao.model.User;
 import ua.skillsup.jp1.services.exceptions.ValidationException;
 
-public class UserValidationServiceImpl implements ValidationService<User> {
+public class UserValidationService implements ValidationService<User> {
 
 	private final static int MIN_NAME_LENGTH = 2;
 	private final static int MAX_NAME_LENGTH = 30;
