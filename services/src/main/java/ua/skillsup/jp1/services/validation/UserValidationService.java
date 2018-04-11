@@ -51,7 +51,7 @@ public class UserValidationService implements ValidationService<User> {
 			throw new ValidationException(ERROR_USER_IS_TOO_YOUNG);
 		}
 
-		if (user.getAge() > MIN_AGE) {
+		if (user.getAge() > MAX_AGE) {
 			throw new ValidationException(ERROR_USER_IS_TOO_OLD);
 		}
 	}
