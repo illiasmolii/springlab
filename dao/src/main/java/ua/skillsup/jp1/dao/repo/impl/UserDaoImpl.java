@@ -1,29 +1,24 @@
 package ua.skillsup.jp1.dao.repo.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import ua.skillsup.jp1.dao.generators.IdGenerator;
-import ua.skillsup.jp1.dao.generators.UserIdGenerator;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
 import ua.skillsup.jp1.dao.model.User;
 import ua.skillsup.jp1.dao.repo.UserDao;
 
+@Repository
 public class UserDaoImpl implements UserDao {
 
-	private final Map<Long, User> users = new HashMap<>();
-
-	private final IdGenerator<User> userIdGenerator;
-
-	public UserDaoImpl(UserIdGenerator userIdGenerator) {
-		this.userIdGenerator = userIdGenerator;
-	}
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public void create(User user) {
-		Long id = userIdGenerator.incrementAndGet();
-		user.setId(id);
-		users.put(id, user);
+		entityManager.persist(user);
 	}
 
 	public User findById(Long id) {
@@ -35,7 +30,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public List<User> findAll() {
-		return new ArrayList<>(users.values());
+		return entityManager.createQuery("SELECT u FROM ua.skillsup.jp1.dao.model.User u")
+				.getResultList();
 	}
 
 	public void update(Long id, User entity) {

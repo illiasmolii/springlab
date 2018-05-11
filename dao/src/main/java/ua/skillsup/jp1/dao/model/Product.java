@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "PRODUCTS")
 public class Product {
 
 	@Id
@@ -47,7 +49,7 @@ public class Product {
 	@Enumerated(EnumType.STRING)
 	private Size size;
 
-	@Column(name = "CATEGORY", nullable = false)
+	@Column(name = "REMAINING_COUNT", nullable = false)
 	private int remainingCount;
 
 	public enum Category {

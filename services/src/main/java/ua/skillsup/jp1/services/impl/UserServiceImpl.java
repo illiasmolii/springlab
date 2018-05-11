@@ -2,6 +2,8 @@ package ua.skillsup.jp1.services.impl;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ua.skillsup.jp1.dao.model.User;
 import ua.skillsup.jp1.dao.repo.UserDao;
 import ua.skillsup.jp1.services.UserService;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void register(UserDto userDto) {
 		User user = userConverter.toEntity(userDto);
 		userValidationService.validate(user);
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<User> findAll() {
 		return userDao.findAll();
 	}
