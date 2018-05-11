@@ -1,10 +1,10 @@
 package ua.skillsup.jp1.dao.repo.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -22,23 +22,28 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public User findById(Long id) {
-		return null;
+		return entityManager.find(User.class, id);
 	}
 
 	public List<User> findByIds(List<Long> ids) {
-		return null;
+		Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.id IN :ids");
+		query.setParameter("ids", ids);
+		return query.getResultList();
 	}
 
 	public List<User> findAll() {
-		return entityManager.createQuery("SELECT u FROM ua.skillsup.jp1.dao.model.User u")
+		return entityManager.createQuery("SELECT u FROM User u")
 				.getResultList();
 	}
 
 	public void update(Long id, User entity) {
-
+		entity.setId(id);
+		entityManager.merge(entity);
 	}
 
 	public void delete(Long id) {
-
+		Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :id");
+		query.setParameter("id", id);
+		query.executeUpdate();
 	}
 }
