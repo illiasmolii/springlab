@@ -16,7 +16,7 @@
 	</modules>
 
 	<properties>
-		<spring.versioon>5.0.5.RELEASE</spring.versioon>
+		<spring.version>5.0.5.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -30,17 +30,17 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.versioon}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.versioon}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.versioon}</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 	</dependencies>
