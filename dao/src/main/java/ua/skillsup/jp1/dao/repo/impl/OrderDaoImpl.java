@@ -1,28 +1,23 @@
 package ua.skillsup.jp1.dao.repo.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import ua.skillsup.jp1.dao.generators.OrderIdGenerator;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
 import ua.skillsup.jp1.dao.model.Order;
 import ua.skillsup.jp1.dao.repo.OrderDao;
 
+@Repository
 public class OrderDaoImpl implements OrderDao {
 
-	private final Map<Long, Order> orders = new HashMap<>();
-
-	private final OrderIdGenerator orderIdGenerator;
-
-	public OrderDaoImpl(OrderIdGenerator orderIdGenerator) {
-		this.orderIdGenerator = orderIdGenerator;
-	}
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public void create(Order order) {
-		Long id = orderIdGenerator.incrementAndGet();
-		order.setId(id);
-		orders.put(id, order);
+		entityManager.persist(order);
 	}
 
 	public Order findById(Long id) {
@@ -34,7 +29,9 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	public List<Order> findAll() {
-		return new ArrayList<>(orders.values());
+		return entityManager
+				.createQuery("SELECT o FROM Order o LEFT JOIN FETCH o.orderItems")
+				.getResultList();
 	}
 
 	public void update(Long id, Order entity) {

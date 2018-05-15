@@ -2,10 +2,13 @@ package ua.skillsup.jp1.services.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ua.skillsup.jp1.dao.model.Order;
+import ua.skillsup.jp1.dao.model.OrderItem;
 import ua.skillsup.jp1.dao.model.Product;
 import ua.skillsup.jp1.dao.model.User;
 import ua.skillsup.jp1.dao.repo.OrderDao;
@@ -13,7 +16,7 @@ import ua.skillsup.jp1.dao.repo.ProductDao;
 import ua.skillsup.jp1.dao.repo.UserDao;
 import ua.skillsup.jp1.services.OrderService;
 import ua.skillsup.jp1.services.ProductService;
-import ua.skillsup.jp1.services.dto.OrderItem;
+import ua.skillsup.jp1.services.dto.OrderItemDto;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -31,30 +34,32 @@ public class OrderServiceImpl implements OrderService {
 		this.productService = productService;
 	}
 
-	public void create(Long userId, List<OrderItem> items) {
+	@Override
+	public void create(Long userId, List<OrderItemDto> items) {
 		Order order = initOrder(userId, items);
 		reduceProductsCount(items);
 		orderDao.create(order);
 	}
 
-	private Order initOrder(Long userId, List<OrderItem> items) {
+	private Order initOrder(Long userId, List<OrderItemDto> items) {
 		User user = userDao.findById(userId);
-		Map<Product, Integer> productsWithCounts = getProductsWithCounts(items);
-
-		return new Order(null, user, productsWithCounts);
+		Set<OrderItem> orderItems = getProductsWithCounts(items);
+		Order order = new Order(null, user, orderItems);
+		orderItems.forEach(orderItem -> orderItem.setOrder(order));
+		return order;
 	}
 
-	private Map<Product, Integer> getProductsWithCounts(List<OrderItem> items) {
+	private Set<OrderItem>  getProductsWithCounts(List<OrderItemDto> items) {
 		List<Long> productIds = getProductsIds(items);
 		List<Product> products = productDao.findByIds(productIds);
-		Map<Long, Product> productsWithIds = mapProductsToIds(products);
+		Map<Long, Product> productsToIds = mapProductsToIds(products);
 
-		return mapProductsToCounts(items, productsWithIds);
+		return initOrderItems(items, productsToIds);
 	}
 
-	private List<Long> getProductsIds(List<OrderItem> items) {
+	private List<Long> getProductsIds(List<OrderItemDto> items) {
 		List<Long> productsIds = new ArrayList<>();
-		for (OrderItem item : items) {
+		for (OrderItemDto item : items) {
 			Long productId = item.getProductId();
 			productsIds.add(productId);
 		}
@@ -71,18 +76,19 @@ public class OrderServiceImpl implements OrderService {
 		return map;
 	}
 
-	private Map<Product, Integer> mapProductsToCounts(List<OrderItem> items, Map<Long, Product> productsWithIds) {
-		Map<Product, Integer> productsWithCounts = new HashMap<>();
-		for (OrderItem item: items) {
-			Product product = productsWithIds.get(item.getProductId());
-			Integer count = item.getCount();
-			productsWithCounts.put(product, count);
+	private Set<OrderItem> initOrderItems(List<OrderItemDto> items, Map<Long, Product> products) {
+		Set<OrderItem> orderItems = new HashSet<>();
+		for (OrderItemDto itemDto: items) {
+			Long productId = itemDto.getProductId();
+			Product product = products.get(productId);
+			Integer count = itemDto.getCount();
+			orderItems.add(new OrderItem(null, null, product, count));
 		}
-		return productsWithCounts;
+		return orderItems;
 	}
 
-	private void reduceProductsCount(List<OrderItem> items) {
-		for (OrderItem item : items) {
+	private void reduceProductsCount(List<OrderItemDto> items) {
+		for (OrderItemDto item : items) {
 			Long productId = item.getProductId();
 			Integer count = item.getCount();
 			productService.reduceCount(productId, count);

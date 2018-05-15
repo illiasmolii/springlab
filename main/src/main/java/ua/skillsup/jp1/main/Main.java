@@ -12,7 +12,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import ua.skillsup.jp1.services.OrderService;
 import ua.skillsup.jp1.services.ProductService;
 import ua.skillsup.jp1.services.UserService;
-import ua.skillsup.jp1.services.dto.OrderItem;
+import ua.skillsup.jp1.services.dto.OrderItemDto;
 import ua.skillsup.jp1.services.dto.ProductDto;
 import ua.skillsup.jp1.services.dto.UserDto;
 import ua.skillsup.jp1.services.exceptions.ValidationException;
@@ -118,7 +118,7 @@ public class Main {
 
 		if ("C".equals(action)) { //TODO
 			Long userId = 0L;
-			List<OrderItem> items = Collections.emptyList();
+			List<OrderItemDto> items = Collections.emptyList();
 			orderService.create(userId, items);
 			System.out.println("Order created successfully");
 		}

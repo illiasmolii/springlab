@@ -22,9 +22,7 @@
 		<constructor-arg name="productIdGenerator" ref="productIdGenerator"/>
 	</bean>
 
-	<bean id="orderDao" class="ua.skillsup.jp1.dao.repo.impl.OrderDaoImpl">
-		<constructor-arg name="orderIdGenerator" ref="orderIdGenerator"/>
-	</bean>
+	<bean id="orderDao" class="ua.skillsup.jp1.dao.repo.impl.OrderDaoImpl"/>
 
 	<!-- Spring JPA integration configuration -->
 
