@@ -73,4 +73,36 @@ public class OrderItem {
 	public int hashCode() {
 		return Objects.hash(id, order, count);
 	}
+
+	public Id getId() {
+		return id;
+	}
+
+	public void setId(Id id) {
+		this.id = id;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 }

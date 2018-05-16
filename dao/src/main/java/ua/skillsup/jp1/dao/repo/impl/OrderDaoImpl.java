@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -21,11 +23,16 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	public Order findById(Long id) {
-		return null;
+		return entityManager.find(Order.class, id);
 	}
 
 	public List<Order> findByIds(List<Long> ids) {
-		return null;
+		TypedQuery<Order> query = entityManager.createQuery(
+				"SELECT o FROM Order o LEFT JOIN FETCH o.orderItems WHERE o.id IN :ids",
+				Order.class
+		);
+		query.setParameter("ids", ids);
+		return query.getResultList();
 	}
 
 	public List<Order> findAll() {
@@ -34,11 +41,14 @@ public class OrderDaoImpl implements OrderDao {
 				.getResultList();
 	}
 
-	public void update(Long id, Order entity) {
-
+	public void update(Long id, Order order) {
+		order.setId(id);
+		entityManager.merge(order);
 	}
 
 	public void delete(Long id) {
-
+		Query query = entityManager.createQuery("DELETE FROM Order o WHERE o.id = :id");
+		query.setParameter("id", id);
+		query.executeUpdate();
 	}
 }

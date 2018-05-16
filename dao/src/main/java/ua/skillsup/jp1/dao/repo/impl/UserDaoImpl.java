@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,13 +27,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public List<User> findByIds(List<Long> ids) {
-		Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.id IN :ids");
+		TypedQuery<User> query = entityManager.createQuery(
+				"SELECT u FROM User u WHERE u.id IN :ids",
+				User.class
+		);
 		query.setParameter("ids", ids);
 		return query.getResultList();
 	}
 
 	public List<User> findAll() {
-		return entityManager.createQuery("SELECT u FROM User u")
+		return entityManager.createQuery("SELECT u FROM User u", User.class)
 				.getResultList();
 	}
 
