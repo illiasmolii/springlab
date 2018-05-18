@@ -1,5 +1,6 @@
 package ua.skillsup.jp1.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> findAll() {
-		return userDao.findAll();
+	public List<UserDto> findAll() {
+		List<UserDto> list = new ArrayList<>();
+		for (User user : userDao.findAll()) {
+			UserDto userDto = userConverter.toDto(user);
+			list.add(userDto);
+		}
+		return list;
 	}
 }

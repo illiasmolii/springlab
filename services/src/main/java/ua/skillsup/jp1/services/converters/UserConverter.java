@@ -8,8 +8,8 @@ import ua.skillsup.jp1.services.exceptions.ValidationException;
 public class UserConverter implements GenericConverter<UserDto, User> {
 
 	@Override
-	public UserDto toDto(User entity) {
-		return null;
+	public UserDto toDto(User user) {
+		return new UserDto(user.getFirstName(), user.getLastName(), String.valueOf(user.getAge()));
 	}
 
 	@Override
