@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 	private Order initOrder(Long userId, List<OrderItemDto> items) {
 		User user = userDao.findById(userId);
 		Set<OrderItem> orderItems = getProductsWithCounts(items);
-		Order order = new Order(null, user, orderItems);
+		Order order = new Order(user, orderItems);
 		orderItems.forEach(orderItem -> orderItem.setOrder(order));
 		return order;
 	}

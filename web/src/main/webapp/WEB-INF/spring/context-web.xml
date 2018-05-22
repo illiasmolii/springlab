@@ -8,7 +8,7 @@
 	<context:annotation-config/>
 	<context:component-scan base-package="ua.skillsup.jp1.controllers"/>
 
-	<import resource="context-services.xml"/>
+	<import resource="classpath:context-services.xml"/>
 
 	<mvc:annotation-driven/>
 </beans>

@@ -13,7 +13,7 @@ public class ShopAppInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		XmlWebApplicationContext context = new XmlWebApplicationContext();
-		context.setConfigLocation("context-web.xml");
+		context.setConfigLocation("/WEB-INF/spring/context-web.xml");
 
 		ServletRegistration.Dynamic dispatcher =
 				servletContext.addServlet("dispatcher", new DispatcherServlet(context));
