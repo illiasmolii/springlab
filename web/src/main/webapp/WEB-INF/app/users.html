@@ -22,7 +22,9 @@
         </tbody>
     </table>
 
-    <form>
+    <h2>Create new user</h2>
+
+    <div>
         <label>
             First Name <input id="firstName"/>
         </label>
@@ -35,12 +37,13 @@
             Age <input id="age"/>
         </label>
         <br/>
-        <button id="create">Create user</button>
-    </form>
+        <button id="create" type="button">Create user</button>
+    </div>
+
     <script>
       var baseUrl = 'http://localhost:8080/users/';
 
-      $(document).ready(function () {
+      var loadData = function() {
         $.ajax({
           url: baseUrl + "all"
         }).done(function (data) {
@@ -54,7 +57,30 @@
           }
 
           $('#users-table tbody').append(html);
-        })
+        });
+      };
+
+      var submitForm = function () {
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var age = $('#age').val();
+
+        $.ajax({
+          url: baseUrl,
+          type: 'POST',
+          dataType: 'json',
+          contentType: "application/json",
+          data: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            age: age
+          })
+        });
+      };
+
+      $(document).ready(function () {
+        loadData();
+        $('#create').click(submitForm);
       });
     </script>
 </body>
