@@ -55,4 +55,10 @@ public class UserController {
 	public void delete(@PathVariable("id") Long id) {
 		log.info("Delete tool by id: {}", id);
 	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public void update(@PathVariable("id") Long id, @RequestBody UserDto user) {
+		log.info("Update user id: {}, payload: {}", id, user);
+	}
 }
