@@ -44,8 +44,16 @@
         $.ajax({
           url: baseUrl + "all"
         }).done(function (data) {
-          $('#users-table')
-          alert(JSON.stringify(data));
+          var html = '';
+          for(var i = 0; i < data.length; i++) {
+            html += '<tr>' +
+              '<td>' + data[i].firstName + '</td>' +
+              '<td>' + data[i].lastName + '</td>' +
+              '<td>' + data[i].age + '</td>' +
+              '</tr>';
+          }
+
+          $('#users-table tbody').append(html);
         })
       });
     </script>
