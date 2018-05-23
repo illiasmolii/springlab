@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.skillsup.jp1.services.UserService;
 import ua.skillsup.jp1.services.dto.UserDto;
 
-// http://websystique.com/springmvc/spring-4-mvc-helloworld-tutorial-annotation-javaconfig-full-example/
 @Controller
 @RequestMapping("/users")
 public class UserController {

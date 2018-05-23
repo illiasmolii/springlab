@@ -11,4 +11,5 @@
 	<import resource="classpath:context-services.xml"/>
 
 	<mvc:annotation-driven/>
+	<mvc:default-servlet-handler/>
 </beans>
