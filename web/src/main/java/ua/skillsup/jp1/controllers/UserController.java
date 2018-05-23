@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ua.skillsup.jp1.services.UserService;
 import ua.skillsup.jp1.services.dto.UserDto;
@@ -21,7 +22,8 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
 	public List<UserDto> getAll() {
 		return userService.findAll();
 	}
