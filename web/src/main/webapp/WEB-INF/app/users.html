@@ -9,11 +9,44 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-    <p>users</p>
+    <h1>Users</h1>
 
+    <table id="users-table">
+        <thead>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Age</td>
+        </thead>
+        <tbody>
+            <!-- Users will be here -->
+        </tbody>
+    </table>
+
+    <form>
+        <label>
+            First Name <input id="firstName"/>
+        </label>
+        <br/>
+        <label>
+            Last Name <input id="lastName"/>
+        </label>
+        <br/>
+        <label>
+            Age <input id="age"/>
+        </label>
+        <br/>
+        <button id="create">Create user</button>
+    </form>
     <script>
+      var baseUrl = 'http://localhost:8080/users/';
+
       $(document).ready(function () {
-        alert("Hi!");
+        $.ajax({
+          url: baseUrl + "all"
+        }).done(function (data) {
+          $('#users-table')
+          alert(JSON.stringify(data));
+        })
       });
     </script>
 </body>
