@@ -12,4 +12,9 @@
 
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/app/"/>
+		<property name="suffix" value=".html"/>
+	</bean>
 </beans>
