@@ -18,6 +18,8 @@
 
 	<properties>
 		<spring.version>5.0.5.RELEASE</spring.version>
+		<logback.version>1.2.3</logback.version>
+		<jcloverslf4j.version>1.7.25</jcloverslf4j.version>
 	</properties>
 
 	<dependencies>
@@ -26,6 +28,17 @@
 			<artifactId>lombok</artifactId>
 			<version>1.16.20</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${jcloverslf4j.version}</version>
 		</dependency>
 
 		<dependency>
