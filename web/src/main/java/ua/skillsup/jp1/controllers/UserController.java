@@ -49,4 +49,10 @@ public class UserController {
 		log.info("Create a new user: {}", user);
 		userService.register(user);
 	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable("id") Long id) {
+		log.info("Delete tool by id: {}", id);
+	}
 }
