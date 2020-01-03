@@ -32,6 +32,7 @@ public class UserController {
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<UserDto> getAll() {
+
 		log.info("Find all users");
 		return userService.findAll();
 	}
