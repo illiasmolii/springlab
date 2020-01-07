@@ -20,7 +20,9 @@ CRUD operations for users, products, orders.
     $ docker run -p 8888:8080 ${image_id_from_step_4}
 
 UI: http://localhost:8888/web-1.0-SNAPSHOT/users/view
+
 Get all users: http://localhost:8888/web-1.0-SNAPSHOT/users/all
+
 Create user:
     
     POST http://localhost:8888/web-1.0-SNAPSHOT/users
