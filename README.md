@@ -2,22 +2,18 @@ Admin panel for online shopping store.
 
 CRUD operations for users, products, orders.
 
-1. Run MySQL:
-	
-	$ docker run --name mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql
-
-2. Put MySQL IP to dao/src/main/resources/context-dao.xml datasource#url
-3. Build the project
+1. Build the project
     
     $ mvn clean package
 
-4. Build app Docker image:
-
-    $ cd web && docker build .
+2. Create a network:
     
-5. Run app container:
+    $ docker network create local
+    
+3. Run containers (MySQL & App):
 
-    $ docker run -p 8888:8080 ${image_id_from_step_4}
+    $ docker run --network=local --name=mysql -v ${project_path}/database/src/main/resources/startup:/docker-entrypoint-initdb.d -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=springlab -d mysql:latest
+    $ docker run -p 8888:8080 --network=local illiasmolii/test:1.0-SNAPSHOT
 
 UI: http://localhost:8888/web-1.0-SNAPSHOT/users/view
 

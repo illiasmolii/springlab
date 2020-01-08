@@ -1,4 +1,3 @@
-CREATE DATABASE springlab;
 use springlab;
 
 CREATE TABLE USERS (
