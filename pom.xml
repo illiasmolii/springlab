@@ -72,4 +72,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>fake.repo</id>
+			<name>Internal repo</name>
+			<url>file:///home/${env.USER}/fake-registry</url>
+		</repository>
+	</distributionManagement>
 </project>
